@@ -1,0 +1,17 @@
+{
+  "FileVersion": 3,
+  "EngineAssociation": "5.5",
+  "Category": "",
+  "Description": "VR Garage - interactive 2.0L engine bay, streamed to the web app via Pixel Streaming.",
+  "Modules": [],
+  "Plugins": [
+    {
+      "Name": "PixelStreaming",
+      "Enabled": true
+    },
+    {
+      "Name": "PythonScriptPlugin",
+      "Enabled": true
+    }
+  ]
+}
