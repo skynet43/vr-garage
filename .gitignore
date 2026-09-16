@@ -48,3 +48,7 @@ backups/
 database/backups/
 *.sqlite
 *.db
+
+# python caches
+__pycache__/
+*.pyc

@@ -1,7 +1,7 @@
 """
 VR Garage - procedural 2.0L Hurricane engine bay builder.
 
-Run inside the Unreal 5.5 editor (Tools > Execute Python Script, or the
+Run inside the Unreal 5.8 editor (Tools > Execute Python Script, or the
 Python console). Builds /Game/Garage/Maps/GarageBay out of engine basic
 shapes with part tags matching the web app (part:<id>), plus lights,
 floor, engine stand and a fly-camera spectator.

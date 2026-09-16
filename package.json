@@ -11,7 +11,7 @@
     "preview": "vite preview --host 0.0.0.0 --port 4173"
   },
   "dependencies": {
-    "@epicgames-ps/lib-pixelstreamingfrontend-ue5.5": "^1.3.0",
+    "@epicgames-ps/lib-pixelstreamingfrontend-ue5.8": "^0.1.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "three": "^0.180.0"

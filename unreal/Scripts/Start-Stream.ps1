@@ -1,7 +1,7 @@
 # VR Garage - start Pixel Streaming from the shop PC.
 #
-# Prereqs: Unreal Engine 5.5, Node.js 18+, NVIDIA/AMD GPU with HW encoder.
-# Usage:  .\Start-Stream.ps1 [-EngineDir "C:\Program Files\Epic Games\UE_5.5"]
+# Prereqs: Unreal Engine 5.8, Node.js 18+, NVIDIA/AMD GPU with HW encoder.
+# Usage:  .\Start-Stream.ps1 [-EngineDir "C:\Program Files\Epic Games\UE_5.8"]
 param(
   [string]$EngineDir = ""
 )
@@ -12,13 +12,13 @@ $Project = Join-Path $UnrealDir "VRGarage.uproject"
 
 if (-not $EngineDir) {
   foreach ($cand in @(
-    "C:\Program Files\Epic Games\UE_5.5",
-    "D:\Program Files\Epic Games\UE_5.5",
-    "$env:ProgramFiles\Epic Games\UE_5.5"
+    "C:\Program Files\Epic Games\UE_5.8",
+    "D:\Program Files\Epic Games\UE_5.8",
+    "$env:ProgramFiles\Epic Games\UE_5.8"
   )) { if (Test-Path $cand) { $EngineDir = $cand; break } }
 }
 if (-not $EngineDir -or -not (Test-Path $EngineDir)) {
-  Write-Host "Unreal Engine 5.5 not found. Pass -EngineDir explicitly." -ForegroundColor Red
+  Write-Host "Unreal Engine 5.8 not found. Pass -EngineDir explicitly." -ForegroundColor Red
   exit 1
 }
 Write-Host "Engine: $EngineDir" -ForegroundColor Cyan

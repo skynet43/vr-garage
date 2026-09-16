@@ -1,11 +1,11 @@
-import { Config, Flags, PixelStreaming, TextParameters } from '@epicgames-ps/lib-pixelstreamingfrontend-ue5.5';
+import { Config, Flags, PixelStreaming, TextParameters } from '@epicgames-ps/lib-pixelstreamingfrontend-ue5.8';
 import { useEffect, useRef, useState } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
 type StreamStatus = 'idle' | 'connecting' | 'live' | 'error';
 
 /**
- * Unreal Engine 5.5 Pixel Streaming player.
+ * Unreal Engine 5.8 Pixel Streaming player.
  *
  * The UE app + signalling server run on the shop PC (see UNREAL.md);
  * this component shows the WebRTC stream and forwards mouse/keyboard input.

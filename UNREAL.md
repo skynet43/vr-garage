@@ -1,6 +1,6 @@
 # Unreal Engine 3D (Pixel Streaming)
 
-The web app's Unreal tab shows a live UE 5.5 stream. UE has no web export —
+The web app's Unreal tab shows a live UE 5.8 stream. UE has no web export —
 instead the engine renders on the **shop PC's GPU** and streams video to the
 browser via WebRTC (Epic's Pixel Streaming 2). Mouse/keyboard input forwards
 back, so orbiting the engine works from any browser tab.
@@ -8,7 +8,7 @@ back, so orbiting the engine works from any browser tab.
 ```
 Shop PC (Windows, GPU)                    Browser (anywhere)
 ┌────────────────────────────┐   WebRTC   ┌──────────────────────┐
-│ VRGarage UE 5.5 app        │───────────▶│ VR Garage web app    │
+│ VRGarage UE 5.8 app        │───────────▶│ VR Garage web app    │
 │  + GarageBay level         │◀───────────│  Unreal Stream tab   │
 │  + PixelStreaming plugin   │  input +   │  mouse/kbd + data    │
 └─────────────┬──────────────┘  commands  └──────────────────────┘
@@ -21,7 +21,7 @@ Shop PC (Windows, GPU)                    Browser (anywhere)
 ## Requirements (shop PC)
 
 - Windows 10/11, discrete GPU (NVIDIA RTX recommended; AMD/Intel with HW encoder OK)
-- Unreal Engine **5.5** (match the frontend lib version)
+- Unreal Engine **5.8** (match the frontend lib version)
 - Node.js 18+ (signalling server), ~2 GB free for the UE project
 
 ## Setup
@@ -61,7 +61,7 @@ Until then, stream + forwarded input (orbit/fly) work out of the box.
 | Connect hangs | Signalling server not running, or UE app not paired to it — check both windows |
 | Black video | GPU encoder busy (close OBS/ShadowPlay) or `-RenderOffScreen` on a headless box without GPU |
 | No mouse/keyboard | Click inside the player first (browser gesture policy) |
-| Wrong UE version | Lib and engine must match major (5.5 ↔ 5.5); mismatches fail SDP negotiation |
+| Wrong UE version | Lib and engine must match major (5.8 ↔ 5.8); mismatches fail SDP negotiation |
 | LAN access | Bind signalling to `0.0.0.0` and open 8888 + ephemeral UDP in the firewall |
 
 ## WebGL fallback
