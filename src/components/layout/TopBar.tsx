@@ -4,6 +4,7 @@ import { parts } from '../../data/parts';
 import { procedures } from '../../data/procedures';
 import { torqueSpecs } from '../../data/torque';
 import { vehicleName, vehicles } from '../../data/vehicles';
+import { wiringDocs } from '../../data/wiring.generated';
 import type { Route } from '../../types';
 import { ICONS, IconPath } from '../Icon';
 
@@ -27,12 +28,13 @@ export function TopBar({ go, vehicleId, setVehicleId, toggleSidebar }: Props) {
       parts: parts.filter((p) => `${p.name} ${p.number}`.toLowerCase().includes(s)).slice(0, 4),
       dtc: dtcs.filter((d) => `${d.code} ${d.title}`.toLowerCase().includes(s)).slice(0, 4),
       torque: torqueSpecs.filter((t) => t.component.toLowerCase().includes(s)).slice(0, 3),
+      wiring: wiringDocs.filter((w) => `${w.title} ${w.category}`.toLowerCase().includes(s)).slice(0, 4),
     };
   }, [q]);
 
   const hasAny =
     results &&
-    (results.procedures.length + results.parts.length + results.dtc.length + results.torque.length > 0);
+    (results.procedures.length + results.parts.length + results.dtc.length + results.torque.length + results.wiring.length > 0);
 
   const jump = (r: Route) => {
     setQ('');
@@ -90,6 +92,13 @@ export function TopBar({ go, vehicleId, setVehicleId, toggleSidebar }: Props) {
               <button key={t.id} className="search-hit" onMouseDown={() => jump({ page: 'torque', id: t.id })}>
                 {t.component}
                 <small>{t.nm} N·m · {t.ftLb} ft-lb</small>
+              </button>
+            ))}
+            {results.wiring.length > 0 && <div className="search-group">Wiring diagrams</div>}
+            {results.wiring.map((w) => (
+              <button key={w.id} className="search-hit" onMouseDown={() => jump({ page: 'wiring', id: w.id })}>
+                {w.title}
+                <small>{w.category} · {w.pages} page{w.pages > 1 ? 's' : ''}</small>
               </button>
             ))}
           </div>

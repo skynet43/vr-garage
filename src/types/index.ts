@@ -74,6 +74,33 @@ export interface DTC {
   procedureIds: string[];
 }
 
+export interface WiringDoc {
+  id: string;
+  title: string;
+  category: string;
+  /** path under public/, e.g. manuals/wiring/FOO.pdf */
+  file: string;
+  pages: number;
+  /** thumbnail paths under public/ */
+  thumbs: string[];
+  pinout?: boolean;
+}
+
+export interface ConnectorPin {
+  pin: string;
+  circuit: string;
+  color: string;
+  gauge: string;
+  function: string;
+  option: string;
+}
+
+export interface ConnectorPinout {
+  id: string;
+  meta: Record<string, string>;
+  pins: ConnectorPin[];
+}
+
 export type PageId =
   | 'dashboard'
   | 'vehicles'

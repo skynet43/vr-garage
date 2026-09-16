@@ -67,6 +67,9 @@ export default function App() {
           {route.page === 'parts' && <Parts go={go} highlightId={route.id} />}
           {route.page === 'torque' && <Torque highlightId={route.id} />}
           {route.page === 'diagnostics' && <Diagnostics go={go} initialCode={route.id} />}
+          {route.page === 'wiring' && (
+            <Wiring key={route.id ?? 'lib'} go={go} initialDocId={route.id} />
+          )}
           {route.page === 'viewer' && <Viewer key={route.focusPart ?? 'plain'} focusPart={route.focusPart} />}
         </main>
       </div>

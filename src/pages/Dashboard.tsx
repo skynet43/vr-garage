@@ -1,7 +1,8 @@
 import { dtcs } from '../data/dtc';
 import { parts } from '../data/parts';
 import { procedures } from '../data/procedures';
-import { vehicleName, vehicles } from '../data/vehicles';
+import { vehicleName } from '../data/vehicles';
+import { wiringDocs } from '../data/wiring.generated';
 import type { Route, Vehicle } from '../types';
 import { Difficulty } from './Procedures';
 
@@ -35,7 +36,7 @@ export function Dashboard({ go, vehicle }: Props) {
           <div className="stat"><div className="num">{procedures.length}</div><div className="lbl">Procedures</div></div>
           <div className="stat"><div className="num">{parts.length}</div><div className="lbl">Parts</div></div>
           <div className="stat"><div className="num">{dtcs.length}</div><div className="lbl">DTCs</div></div>
-          <div className="stat"><div className="num">{vehicles.length}</div><div className="lbl">Vehicles</div></div>
+          <div className="stat"><div className="num">{wiringDocs.length}</div><div className="lbl">Diagrams</div></div>
         </div>
       </div>
 
@@ -76,6 +77,7 @@ export function Dashboard({ go, vehicle }: Props) {
         <div className="card">
           <h3>Shop shortcuts</h3>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            <button className="btn ghost small" onClick={() => go({ page: 'wiring' })}>Wiring diagrams</button>
             <button className="btn ghost small" onClick={() => go({ page: 'torque' })}>Torque specs</button>
             <button className="btn ghost small" onClick={() => go({ page: 'diagnostics' })}>Decode a DTC</button>
             <button className="btn ghost small" onClick={() => go({ page: 'parts' })}>Look up a part</button>

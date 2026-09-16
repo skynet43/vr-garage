@@ -42,7 +42,7 @@ export function Sidebar({ route, go, open, close, vrReady }: Props) {
 
       <nav className="nav">
         <div className="nav-label">Workshop</div>
-        {NAV.slice(0, 4).map((n) => (
+        {NAV.slice(0, 5).map((n) => (
           <button
             key={n.page}
             className={`nav-item${active(n.page) ? ' active' : ''}`}
@@ -56,7 +56,7 @@ export function Sidebar({ route, go, open, close, vrReady }: Props) {
           </button>
         ))}
         <div className="nav-label">Reference</div>
-        {NAV.slice(4).map((n) => (
+        {NAV.slice(5).map((n) => (
           <button
             key={n.page}
             className={`nav-item${active(n.page) ? ' active' : ''}`}
