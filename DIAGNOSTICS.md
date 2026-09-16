@@ -15,12 +15,19 @@ JScan uses — so live data and fault codes work with no middleman app.
 
 ## Adapter support
 
-- Requires a **BLE (Bluetooth 4.0+) ELM327** adapter — classic Bluetooth 3.0/SPP
-  units can't pair from a browser.
-- Known profiles: generic FFE0/FFE1 (Veepeak, iCar 2/3, most clones),
-  Vgate iCar Pro FFF0, Nordic UART. Auto-detect probes each until one answers ATZ.
+Two hardware paths, both in the OBD Live page:
+
+1. **Web Bluetooth (BLE adapters)** — BLE 4.0+ ELM327 units. Known profiles:
+   generic FFE0/FFE1 (Veepeak, iCar 2/3, most clones), Vgate iCar Pro FFF0,
+   Nordic UART. Auto-detect probes each until one answers ATZ; manual UUIDs
+   for unlisted units.
+2. **Web Serial (USB + classic Bluetooth)** — USB ELM327 cables, or classic
+   BT/SPP adapters paired in Windows Settings first (pairing creates a COM
+   port — pick the *outgoing* one). Baud selectable: 9600–500000, start 38400.
+
 - Browser: Chrome/Edge on Android, Windows or macOS, served over HTTPS.
-  **iOS Safari has no Web Bluetooth** — use the JScan import there instead.
+- Only one app can hold the adapter at a time — close JScan/Torque first.
+- **iOS Safari has neither API** — use the JScan import there instead.
 
 ## JScan import
 

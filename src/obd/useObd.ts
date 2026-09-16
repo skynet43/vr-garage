@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { connectCustom, connectObd } from './bluetooth';
 import { Elm327, parseDtcs, parsePid, parseVin } from './elm327';
+import { connectSerialPort } from './serial';
 import { SimulatorTransport } from './simulator';
 import { PIDS, type ObdStatus } from './types';
 
@@ -144,6 +145,27 @@ export function useObd() {
     [disconnect, finishConnect, patch]
   );
 
+  const connectSerial = useCallback(
+    async (baud: number) => {
+      await disconnect();
+      patch({ status: 'connecting', progress: 'Choose the COM port…' });
+      try {
+        const transport = await connectSerialPort(baud);
+        const elm = new Elm327(transport);
+        patch({ adapter: elm.label });
+        await finishConnect(elm);
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        patch({
+          status: /No port selected/.test(msg) ? 'idle' : 'error',
+          progress: '',
+          error: /No port selected/.test(msg) ? '' : msg,
+        });
+      }
+    },
+    [disconnect, finishConnect, patch]
+  );
+
   const connectCustomUuids = useCallback(
     async (service: string, writeChar: string, notifyChar: string) => {
       await disconnect();
@@ -193,6 +215,7 @@ export function useObd() {
     state,
     connectDemo,
     connectBle,
+    connectSerial,
     connectCustomUuids,
     disconnect,
     refreshDtcs,

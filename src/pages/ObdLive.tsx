@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { dtcByCode } from '../data/dtc';
 import { BLE_PROFILES, bleSupported } from '../obd/bluetooth';
 import { extractCodes, vinYear } from '../obd/elm327';
+import { BAUD_RATES, serialSupported } from '../obd/serial';
 import { PIDS } from '../obd/types';
 import { useObd } from '../obd/useObd';
 import type { Route } from '../types';
@@ -77,8 +78,9 @@ function JscanImport({ go }: { go: (r: Route) => void }) {
 }
 
 export function ObdLive({ go }: Props) {
-  const { state, connectDemo, connectBle, connectCustomUuids, disconnect, refreshDtcs, clearDtcs, startPolling, stopPolling } = useObd();
+  const { state, connectDemo, connectBle, connectSerial, connectCustomUuids, disconnect, refreshDtcs, clearDtcs, startPolling, stopPolling } = useObd();
   const [profile, setProfile] = useState<string>('auto');
+  const [baud, setBaud] = useState(38400);
   const [svc, setSvc] = useState('');
   const [wr, setWr] = useState('');
   const [nt, setNt] = useState('');
@@ -130,10 +132,25 @@ export function ObdLive({ go }: Props) {
             <div className="muted" style={{ fontSize: 12.5 }}>
               {BLE_PROFILES.find((p) => p.id === profile)?.note ?? 'Cycles every known BLE layout until the adapter answers.'}
             </div>
-            {!bleSupported() && (
+            <div className="filter-row" style={{ marginTop: 10 }}>
+              <select value={baud} onChange={(e) => setBaud(Number(e.target.value))} title="Baud rate">
+                {BAUD_RATES.map((b) => (
+                  <option key={b} value={b}>{b} baud</option>
+                ))}
+              </select>
+              <button className="btn small" onClick={() => void connectSerial(baud)} disabled={!serialSupported()}>
+                Connect serial / USB / paired BT
+              </button>
+            </div>
+            <div className="muted" style={{ fontSize: 12.5 }}>
+              USB cable, or classic-Bluetooth adapter already paired in Windows Settings
+              (pair first — PIN is usually 1234 — then pick its <em>outgoing</em> COM port).
+              Start at 38400 baud; if it answers gibberish, try 115200.
+            </div>
+            {!bleSupported() && !serialSupported() && (
               <div className="step-warn" style={{ marginTop: 10 }}>
-                Web Bluetooth isn't available in this browser. Use Chrome or Edge on Android/Windows/macOS
-                over HTTPS — iOS Safari can't reach Bluetooth adapters (use the JScan import below instead).
+                This browser can't reach OBD hardware (no Web Bluetooth / Web Serial). Use Chrome or Edge
+                on Android/Windows/macOS over HTTPS — on iOS Safari use the JScan import below instead.
               </div>
             )}
             <details style={{ marginTop: 10 }}>
