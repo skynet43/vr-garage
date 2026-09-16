@@ -13,6 +13,7 @@
 | Torque | 16 specs with tightening sequences, N·m + ft-lb |
 | Search | Global search across procedures, parts, DTCs, torque, wiring |
 | Wiring library | 74 factory diagrams in 9 categories, embedded PDF viewer, 9 searchable connector pinouts with wire-color dots |
+| OBD live | Web Bluetooth ELM327: live PIDs, DTC read/clear, VIN decode, demo simulator, JScan export importer |
 
 ## Planned
 

@@ -110,7 +110,8 @@ export type PageId =
   | 'torque'
   | 'viewer'
   | 'diagnostics'
-  | 'wiring';
+  | 'wiring'
+  | 'obd';
 
 export interface Route {
   page: PageId;

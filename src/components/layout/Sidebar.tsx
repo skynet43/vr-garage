@@ -15,6 +15,7 @@ const NAV: { page: PageId; label: string; icon: string }[] = [
   { page: 'procedures', label: 'Repair Procedures', icon: ICONS.wrench },
   { page: 'diagnostics', label: 'Diagnostics', icon: ICONS.pulse },
   { page: 'wiring', label: 'Wiring & Electrical', icon: ICONS.bolt },
+  { page: 'obd', label: 'OBD Live', icon: ICONS.radio },
   { page: 'vehicles', label: 'Vehicles', icon: ICONS.car },
   { page: 'parts', label: 'Parts Database', icon: ICONS.box },
   { page: 'torque', label: 'Torque Specs', icon: ICONS.gauge },
@@ -42,7 +43,7 @@ export function Sidebar({ route, go, open, close, vrReady }: Props) {
 
       <nav className="nav">
         <div className="nav-label">Workshop</div>
-        {NAV.slice(0, 5).map((n) => (
+        {NAV.slice(0, 6).map((n) => (
           <button
             key={n.page}
             className={`nav-item${active(n.page) ? ' active' : ''}`}
@@ -56,7 +57,7 @@ export function Sidebar({ route, go, open, close, vrReady }: Props) {
           </button>
         ))}
         <div className="nav-label">Reference</div>
-        {NAV.slice(5).map((n) => (
+        {NAV.slice(6).map((n) => (
           <button
             key={n.page}
             className={`nav-item${active(n.page) ? ' active' : ''}`}

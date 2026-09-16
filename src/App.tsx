@@ -13,6 +13,7 @@ import { Torque } from './pages/Torque';
 import { Vehicles } from './pages/Vehicles';
 import { Viewer } from './pages/Viewer';
 import { Wiring } from './pages/Wiring';
+import { ObdLive } from './pages/ObdLive';
 import type { Route } from './types';
 import './styles/global.css';
 
@@ -70,6 +71,7 @@ export default function App() {
           {route.page === 'wiring' && (
             <Wiring key={route.id ?? 'lib'} go={go} initialDocId={route.id} />
           )}
+          {route.page === 'obd' && <ObdLive go={go} />}
           {route.page === 'viewer' && <Viewer key={route.focusPart ?? 'plain'} focusPart={route.focusPart} />}
         </main>
       </div>
