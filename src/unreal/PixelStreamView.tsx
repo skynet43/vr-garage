@@ -1,4 +1,4 @@
-import { Config, PixelStreaming } from '@epicgames-ps/lib-pixelstreamingfrontend-ue5.5';
+import { Config, Flags, PixelStreaming, TextParameters } from '@epicgames-ps/lib-pixelstreamingfrontend-ue5.5';
 import { useEffect, useRef, useState } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
@@ -52,9 +52,9 @@ export function PixelStreamView() {
 
     try {
       const config = new Config();
-      config.setTextSetting(Config.SignallingServerUrl, url);
-      config.setFlagEnabled(Config.AutoConnect, false);
-      config.setFlagEnabled(Config.AutoPlayVideo, true);
+      config.setTextSetting(TextParameters.SignallingServerUrl, url);
+      config.setFlagEnabled(Flags.AutoConnect, false);
+      config.setFlagEnabled(Flags.AutoPlayVideo, true);
 
       const stream = new PixelStreaming(config, { videoElementParent: mount });
       streamRef.current = stream;
