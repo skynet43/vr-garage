@@ -20,7 +20,13 @@ Shop PC (Windows, GPU)                    Browser (anywhere)
 
 ## Requirements (shop PC)
 
-- Windows 10/11, discrete GPU (NVIDIA RTX recommended; AMD/Intel with HW encoder OK)
+- Windows 10/11, discrete GPU. NVIDIA (NVENC) is Epic's best-tested path, but
+  **AMD Radeon with AMF is officially supported** for H.264 hardware encoding —
+  your Alpha 17's RX 5600M/6600M qualifies. Keep **AMD Adrenalin drivers current**
+  (AMF ships with the driver).
+- **Laptop dual-GPU warning:** force Unreal onto the discrete RTX GPU, not the
+  integrated graphics — Windows Settings → Display → Graphics → add `UnrealEditor.exe`
+  → **High performance**. (Or pass `-GraphicsAdapter N` to the script.)
 - Unreal Engine **5.8** (match the frontend lib version)
 - Node.js 18+ (signalling server), ~2 GB free for the UE project
 
@@ -60,6 +66,8 @@ Until then, stream + forwarded input (orbit/fly) work out of the box.
 |---|---|
 | Connect hangs | Signalling server not running, or UE app not paired to it — check both windows |
 | Black video | GPU encoder busy (close OBS/ShadowPlay) or `-RenderOffScreen` on a headless box without GPU |
+| No compatible GPU found | Update AMD Adrenalin / NVIDIA drivers — the AMF/NVENC encoder libs ship with them |
+| Runs on iGPU (slow) | Windows Graphics settings → UnrealEditor → High performance, or `-GraphicsAdapter N` |
 | No mouse/keyboard | Click inside the player first (browser gesture policy) |
 | Wrong UE version | Lib and engine must match major (5.8 ↔ 5.8); mismatches fail SDP negotiation |
 | LAN access | Bind signalling to `0.0.0.0` and open 8888 + ephemeral UDP in the firewall |

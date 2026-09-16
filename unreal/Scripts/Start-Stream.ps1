@@ -1,9 +1,10 @@
 # VR Garage - start Pixel Streaming from the shop PC.
 #
 # Prereqs: Unreal Engine 5.8, Node.js 18+, NVIDIA/AMD GPU with HW encoder.
-# Usage:  .\Start-Stream.ps1 [-EngineDir "C:\Program Files\Epic Games\UE_5.8"]
+# Usage:  .\Start-Stream.ps1 [-EngineDir "C:\Program Files\Epic Games\UE_5.8"] [-GraphicsAdapter 1]
 param(
-  [string]$EngineDir = ""
+  [string]$EngineDir = "",
+  [int]$GraphicsAdapter = -1
 )
 
 $ErrorActionPreference = "Stop"
@@ -32,6 +33,8 @@ Start-Process powershell -ArgumentList "-NoExit", "-Command", "node `"$Cirrus`" 
 
 $Editor = Join-Path $EngineDir "Engine\Binaries\Win64\UnrealEditor.exe"
 $Map = "/Game/Garage/Maps/GarageBay"
+$GpuFlag = @()
+if ($GraphicsAdapter -ge 0) { $GpuFlag = @("-graphicsadapter=$GraphicsAdapter") }
 Write-Host "Launching VRGarage (game mode, offscreen render) ..." -ForegroundColor Cyan
 Write-Host "Then open VR Garage -> 3D Engine Viewer -> Unreal Engine stream -> Connect to UE." -ForegroundColor Yellow
-& $Editor "`"$Project`"" $Map -game -PixelStreamingURL=ws://127.0.0.1:8888 -RenderOffScreen -ResX=1280 -ResY=720 -Log
+& $Editor "`"$Project`"" $Map -game -PixelStreamingURL=ws://127.0.0.1:8888 -RenderOffScreen -ResX=1280 -ResY=720 -Log @GpuFlag
