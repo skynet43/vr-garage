@@ -39,6 +39,10 @@ temp/
 *.tsbuildinfo
 vite.config.ts.timestamp-*
 
+# raw manual drops + intermediate import artifacts (can be huge)
+docs/manuals/*.pdf
+database/seed/manual-import/
+
 # backups
 backups/
 database/backups/
