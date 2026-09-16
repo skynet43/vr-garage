@@ -12,6 +12,7 @@ import { Procedures } from './pages/Procedures';
 import { Torque } from './pages/Torque';
 import { Vehicles } from './pages/Vehicles';
 import { Viewer } from './pages/Viewer';
+import { Wiring } from './pages/Wiring';
 import type { Route } from './types';
 import './styles/global.css';
 

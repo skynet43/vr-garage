@@ -82,7 +82,8 @@ export type PageId =
   | 'parts'
   | 'torque'
   | 'viewer'
-  | 'diagnostics';
+  | 'diagnostics'
+  | 'wiring';
 
 export interface Route {
   page: PageId;

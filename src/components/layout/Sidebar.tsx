@@ -14,6 +14,7 @@ const NAV: { page: PageId; label: string; icon: string }[] = [
   { page: 'viewer', label: '3D Engine Viewer', icon: ICONS.cube },
   { page: 'procedures', label: 'Repair Procedures', icon: ICONS.wrench },
   { page: 'diagnostics', label: 'Diagnostics', icon: ICONS.pulse },
+  { page: 'wiring', label: 'Wiring & Electrical', icon: ICONS.bolt },
   { page: 'vehicles', label: 'Vehicles', icon: ICONS.car },
   { page: 'parts', label: 'Parts Database', icon: ICONS.box },
   { page: 'torque', label: 'Torque Specs', icon: ICONS.gauge },
