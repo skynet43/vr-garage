@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { connectorPinouts, wiringDocs } from '../data/wiring.generated';
+import { dtcsForDiagram, stepsForDiagram } from '../data/wiring-links';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import type { Route, WiringDoc } from '../types';
 
@@ -89,6 +90,8 @@ const CATEGORIES = ['All', ...[...new Set(wiringDocs.map((d) => d.category))].so
 function DocDetail({ doc, go }: { doc: WiringDoc; go: (r: Route) => void }) {
   const [page, setPage] = useState(1);
   const pinout = connectorPinouts.find((p) => p.id === doc.id);
+  const stepRefs = useMemo(() => stepsForDiagram(doc.id), [doc.id]);
+  const dtcRefs = useMemo(() => dtcsForDiagram(doc.id), [doc.id]);
   const [pinQ, setPinQ] = useState('');
 
   const pins = useMemo(() => {
@@ -148,6 +151,33 @@ function DocDetail({ doc, go }: { doc: WiringDoc; go: (r: Route) => void }) {
           Use the PDF toolbar to zoom — wire colors and cavity numbers stay sharp at any level.
         </div>
       </div>
+
+      {(stepRefs.length > 0 || dtcRefs.length > 0) && (
+        <div className="card" style={{ marginTop: 16 }}>
+          <h3>Referenced by</h3>
+          {stepRefs.map((r) => (
+            <div key={`${r.procId}-${r.section}-${r.n}`} style={{ marginBottom: 10 }}>
+              <button
+                className="btn ghost small"
+                onClick={() => go({ page: 'procedure', id: r.procId })}
+                style={{ marginRight: 8 }}
+              >
+                {r.procId} · {r.section} step {r.n}
+              </button>
+              <span className="muted" style={{ fontSize: 13 }}>{r.title}</span>
+            </div>
+          ))}
+          {dtcRefs.length > 0 && (
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: stepRefs.length ? 10 : 0 }}>
+              {dtcRefs.map((d) => (
+                <button key={d.code} className="btn ghost small" onClick={() => go({ page: 'diagnostics', id: d.code })}>
+                  {d.code} — {d.title}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       {pinout && (
         <div style={{ marginTop: 16 }}>

@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { PART_META } from '../components/viewer/EngineViewer';
 import { procedureById } from '../data/procedures';
 import { torqueById } from '../data/torque';
+import { stepWiringLinks, wiringTitle } from '../data/wiring-links';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import type { ProcedureStep, Route } from '../types';
 import { Difficulty } from './Procedures';
@@ -12,8 +13,9 @@ interface Props {
   back: () => void;
 }
 
-function StepRow({ step, done, toggle, go }: { step: ProcedureStep; done: boolean; toggle: () => void; go: (r: Route) => void }) {
+function StepRow({ step, procId, stepKey, done, toggle, go }: { step: ProcedureStep; procId: string; stepKey: string; done: boolean; toggle: () => void; go: (r: Route) => void }) {
   const torque = step.torqueId ? torqueById(step.torqueId) : undefined;
+  const diagrams = stepWiringLinks[`${procId}:${stepKey}`] ?? [];
   return (
     <div className={`step${done ? ' done' : ''}`}>
       <button className="step-check" onClick={toggle} title={done ? 'Mark not done' : 'Mark done'}>✓</button>
@@ -23,13 +25,18 @@ function StepRow({ step, done, toggle, go }: { step: ProcedureStep; done: boolea
         {step.detail && <div className="step-detail">{step.detail}</div>}
         {step.reference && <div className="step-ref">Refer to {step.reference}</div>}
         {step.warning && <div className="step-warn">⚠ {step.warning}</div>}
-        {(torque || step.parts3d) && (
+        {(torque || step.parts3d || diagrams.length > 0) && (
           <div className="step-links">
             {torque && (
               <button className="btn ghost small" onClick={() => go({ page: 'torque', id: torque.id })}>
                 Torque: {torque.nm} N·m
               </button>
             )}
+            {diagrams.map((wid) => (
+              <button key={wid} className="btn ghost small" onClick={() => go({ page: 'wiring', id: wid })}>
+                Diagram: {wiringTitle(wid)}
+              </button>
+            ))}
             {step.parts3d?.map((pid) =>
               PART_META[pid] ? (
                 <button key={pid} className="btn ghost small" onClick={() => go({ page: 'viewer', focusPart: pid })}>
@@ -127,7 +134,7 @@ export function ProcedureDetail({ id, go, back }: Props) {
 
       <div>
         {steps.map((s) => (
-          <StepRow key={s.n} step={s} done={!!checked[`${prefix}${s.n}`]} toggle={() => toggle(`${prefix}${s.n}`)} go={go} />
+          <StepRow key={s.n} step={s} procId={proc.id} stepKey={`${prefix}${s.n}`} done={!!checked[`${prefix}${s.n}`]} toggle={() => toggle(`${prefix}${s.n}`)} go={go} />
         ))}
       </div>
 

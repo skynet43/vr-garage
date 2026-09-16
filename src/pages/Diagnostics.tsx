@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { dtcs } from '../data/dtc';
+import { dtcWiringLinks, wiringTitle } from '../data/wiring-links';
 import type { Route } from '../types';
 
 interface Props {
@@ -54,11 +55,16 @@ export function Diagnostics({ go, initialCode }: Props) {
                   <ul className="muted" style={{ marginTop: 4 }}>
                     {d.fixes.map((f) => <li key={f}>{f}</li>)}
                   </ul>
-                  {d.procedureIds.length > 0 && (
+                  {(d.procedureIds.length > 0 || (dtcWiringLinks[d.code]?.length ?? 0) > 0) && (
                     <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 8 }}>
                       {d.procedureIds.map((pid) => (
                         <button key={pid} className="btn ghost small" onClick={() => go({ page: 'procedure', id: pid })}>
                           Open {pid}
+                        </button>
+                      ))}
+                      {(dtcWiringLinks[d.code] ?? []).map((wid) => (
+                        <button key={wid} className="btn ghost small" onClick={() => go({ page: 'wiring', id: wid })}>
+                          Diagram: {wiringTitle(wid)}
                         </button>
                       ))}
                     </div>
