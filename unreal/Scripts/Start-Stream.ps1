@@ -4,7 +4,9 @@
 # Usage:  .\Start-Stream.ps1 [-EngineDir "C:\Program Files\Epic Games\UE_5.8"] [-GraphicsAdapter 1]
 param(
   [string]$EngineDir = "",
-  [int]$GraphicsAdapter = -1
+  [int]$GraphicsAdapter = -1,
+  [int]$ResX = 1920,
+  [int]$ResY = 1080
 )
 
 $ErrorActionPreference = "Stop"
@@ -37,4 +39,4 @@ $GpuFlag = @()
 if ($GraphicsAdapter -ge 0) { $GpuFlag = @("-graphicsadapter=$GraphicsAdapter") }
 Write-Host "Launching VRGarage (game mode, offscreen render) ..." -ForegroundColor Cyan
 Write-Host "Then open VR Garage -> 3D Engine Viewer -> Unreal Engine stream -> Connect to UE." -ForegroundColor Yellow
-& $Editor "`"$Project`"" $Map -game -PixelStreamingURL=ws://127.0.0.1:8888 -RenderOffScreen -ResX=1280 -ResY=720 -Log @GpuFlag
+& $Editor "`"$Project`"" $Map -game -PixelStreamingURL=ws://127.0.0.1:8888 -RenderOffScreen -ResX=$ResX -ResY=$ResY -Log @GpuFlag
